@@ -1,21 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-     <!-- Bootstrap css link  -->
-     <link
-     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-     rel="stylesheet"
-     integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
-     crossorigin="anonymous"
-   />
-
-    <title>Django Home</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block start %}
     <h1 class="text-primary text-center mt-4">Tiger Park Limited</h1>
+    <div class="container">
+        <button>
+            <a class="text-decoration-none text-black" href="/about">About</a>
+        </button>
+    </div>
     <hr class="text-warning">
 
     <!-- get data from server side and display data  -->
@@ -31,6 +21,8 @@
                 <th scope="col">Age</th>
                 <th scope="col">Roll</th>
                 <th scope="col">Department</th>
+                <th scope="col">eisson</th>
+                <th scope="col">Group</th>
             </tr>
             </thead>
             <tbody>
@@ -41,12 +33,12 @@
                 <td>{{student.age}}</td>
                 <td>{{student.roll}}</td>
                 <td>{{student.department}}</td>
+                <td>{{student.group}}</td>
+                <td>{{student.seisson}}</td>
             
               </tr>
               {% endfor %}
             </tbody>
           </table>
     </div>
-    
-</body>
-</html>
+ {% endblock %}
