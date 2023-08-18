@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .models import *
+from .models import Student
 
 def home(request):
     student_info = [
@@ -13,7 +14,6 @@ def home(request):
 
 
 def about(request):
-
     if request.method == "POST":
         data = request.POST
         student_name = data.get('name')
@@ -30,4 +30,7 @@ def about(request):
             mobile=student_mobile,
         )
         return redirect("/about")
-    return render(request, 'home/about.html')
+
+    all_students= Student.objects.all()
+    # print(all_students)
+    return render(request, 'home/about.html', context={'students':all_students})
