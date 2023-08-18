@@ -34,3 +34,8 @@ def about(request):
     all_students= Student.objects.all()
     # print(all_students)
     return render(request, 'home/about.html', context={'students':all_students})
+
+def delete_student(request,id):
+    queryset = Student.objects.get(id = id)
+    queryset.delete()
+    return redirect('/about')
