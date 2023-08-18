@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
-
+from .models import *
 
 def home(request):
     student_info = [
@@ -13,4 +13,21 @@ def home(request):
 
 
 def about(request):
+
+    if request.method == "POST":
+        data = request.POST
+        student_name = data.get('name')
+        student_email = data.get('email')
+        student_address = data.get('address')
+        student_mobile = data.get('mobile')
+
+        # print(student_name,student_email,student_address,student_mobile)
+
+        Student.objects.create(
+            name = student_name,
+            email=student_email,
+            address = student_address,
+            mobile=student_mobile,
+        )
+        return redirect("/about")
     return render(request, 'home/about.html')

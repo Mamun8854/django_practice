@@ -8,6 +8,34 @@
     </div>
     <hr class="text-warning">
 
-   <h4>This is about page</h4>
+   <h4 class="text-center mb-4">This is about page</h4>
+
+   <div class="container">
+    <form class=" col-6 card p-3 shadow-lg mx-auto" method="POST">
+        {% csrf_token %}
+
+        <h4>Add New Student</h4>
+        <hr>
+
+        <div class="form-group mb-3">
+          <label for="exampleInputEmail1">Name</label>
+          <input name="name" type="text" required class="form-control" placeholder="Enter Name">
+        </div>
+        <div class="form-group mb-3">
+          <label>E-mail</label>
+          <input name="email" type="email" required class="form-control" placeholder="Enter E-mail">
+        </div>
+        <div class="form-group mb-3">
+          <label>Address</label>
+          <input name="address" type="text" class="form-control" placeholder="Enter Address">
+        </div>
+        <div class="form-group mb-3">
+          <label>Phone Number</label>
+          <input name="mobile" type="phone" required class="form-control" placeholder="Enter Phone Number">
+        </div>
+       
+        <button type="submit" class="btn btn-success">Add Student</button>
+      </form>
+   </div>
     
 {% endblock %}
