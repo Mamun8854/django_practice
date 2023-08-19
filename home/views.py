@@ -1,7 +1,12 @@
 from django.shortcuts import render,redirect
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from .models import *
 from django.contrib import messages
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.parsers import JSONParser
+from home.models import Student
+from home.serializers import StudentSerializer
+
 
 def home(request):
     student_info = [
@@ -32,12 +37,11 @@ def about(request):
         messages.success(request, "Student added successfuly!")
         return redirect("/about")
 
-    all_students= Student.objects.all()
+    all_students= Student.objects.all().order_by('-pk')
     # print(all_students)
     # search by name code start
     
-    if request.GET.get('search'):
-        
+    if request.GET.get('search'): 
         all_students = all_students.filter(name__icontains = request.GET.get('search'))
 
     # search by name code end
@@ -70,3 +74,21 @@ def update_student(request,id):
 
     context = {'student':queryset}
     return render(request, 'home/update_student.html',context)
+
+
+#   For API create 
+
+@csrf_exempt
+def student_list(request):
+    if request.method == 'GET':
+        students = Student.objects.all()
+        serializer = StudentSerializer(students, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+    elif request.method == 'POST':
+        data = JSONParser().parse(request)
+        serializer = StudentSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=201)
+        return JsonResponse(serializer.errors, status=400)
