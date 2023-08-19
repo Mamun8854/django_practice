@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .models import *
-from .models import Student
+from django.contrib import messages
 
 def home(request):
     student_info = [
@@ -29,6 +29,7 @@ def about(request):
             address = student_address,
             mobile=student_mobile,
         )
+        messages.success(request, "Student added successfuly!")
         return redirect("/about")
 
     all_students= Student.objects.all()
