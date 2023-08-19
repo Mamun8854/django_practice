@@ -39,8 +39,22 @@
    </div>
    
    <div class="container">
-    <h3 class="text-center text-danger my-5">Student Information Table</h3>
+    <h3 class="text-center text-danger mt-5">Student Information Table</h3>
     <p class="text-center">"Information from postgresql DB side :)"</p>
+    <hr>
+    <div>
+      <form action="" class="col-3">
+        <label>
+          Search by name
+        </label>
+        <div class="d-flex justify-content-end gap-2">
+
+          <input name="search" type="text" class="form-control" placeholder="Enter Name">
+          <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+      </form>
+    </div>
+
     <table class="table table-hover">
         <thead>
           <tr>
@@ -63,7 +77,7 @@
             <td>{{student.mobile}}</td>
             <td>
                 <a class="btn btn-danger" href="/delete-student/{{student.id}}">Delete</a>
-                <a class="btn btn-primary" href="">Edit</a>
+                <a class="btn btn-success" href="/update-student/{{student.id}}">Edit</a>
             </td>
             
         

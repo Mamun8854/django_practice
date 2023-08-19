@@ -34,9 +34,39 @@ def about(request):
 
     all_students= Student.objects.all()
     # print(all_students)
+    # search by name code start
+    
+    if request.GET.get('search'):
+        
+        all_students = all_students.filter(name__icontains = request.GET.get('search'))
+
+    # search by name code end
+
     return render(request, 'home/about.html', context={'students':all_students})
 
 def delete_student(request,id):
     queryset = Student.objects.get(id = id)
     queryset.delete()
     return redirect('/about')
+
+def update_student(request,id):
+    queryset = Student.objects.get(id = id)
+
+    if request.method == "POST":
+        data = request.POST
+        student_name = data.get('name')
+        student_email = data.get('email')
+        student_address = data.get('address')
+        student_mobile = data.get('mobile')
+
+        queryset.name = student_name
+        queryset.email = student_email
+        queryset.address = student_address
+        queryset.mobile = student_mobile
+
+        queryset.save()
+        return redirect('/about')
+
+
+    context = {'student':queryset}
+    return render(request, 'home/update_student.html',context)
