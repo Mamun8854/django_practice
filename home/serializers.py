@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from home.models import Student
 
+"""for function based api"""
+"""
 class StudentSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=100)
     email = serializers.CharField(max_length=50)
@@ -19,3 +21,10 @@ class StudentSerializer(serializers.Serializer):
         instance.mobile = validated_data.get('mobile', instance.mobile)
         instance.save()
         return instance
+"""
+
+""" for class based api """
+class StudentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Student
+        fields = ['name','email','address','mobile']

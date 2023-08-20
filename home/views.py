@@ -6,6 +6,10 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from home.models import Student
 from home.serializers import StudentSerializer
+from rest_framework import status
+from rest_framework.views import APIView
+from django.http import Http404
+from rest_framework.response import Response
 
 
 def home(request):
@@ -76,8 +80,8 @@ def update_student(request,id):
     return render(request, 'home/update_student.html',context)
 
 
-#   For API create 
-
+#   For API create  using function based api 
+"""
 @csrf_exempt
 def student_list(request):
     if request.method == 'GET':
@@ -92,3 +96,32 @@ def student_list(request):
             serializer.save()
             return JsonResponse(serializer.data, status=201)
         return JsonResponse(serializer.errors, status=400)
+
+"""
+
+#  end function based api
+
+
+#  api create using class based api 
+
+class studentAPI(APIView):
+    def get(self, request, format=None):
+        students = Student.objects.all()
+        serializer = StudentSerializer(students, many=True)
+        return Response(serializer.data)
+    def post(self, request, format=None):
+        data = JSONParser().parse(request)
+        serializer = StudentSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status_201_DATA_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# Only get all data using class based api 
+
+class allStudentAPI(APIView):
+    def get(self,request, format=None):
+        students = Student.objects.all()
+        serializer = StudentSerializer(students, many=True)
+        return Response(serializer.data)
