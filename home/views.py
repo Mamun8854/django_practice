@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from home.models import Student
 from home.serializers import StudentSerializer
-from rest_framework import status
+from rest_framework import status, generics
 from rest_framework.views import APIView
 from django.http import Http404
 from rest_framework.response import Response
@@ -125,3 +125,10 @@ class allStudentAPI(APIView):
         students = Student.objects.all()
         serializer = StudentSerializer(students, many=True)
         return Response(serializer.data)
+
+
+# Only get all data using generics APIView 
+
+class studentList(generics.ListAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer

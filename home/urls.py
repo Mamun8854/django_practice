@@ -8,4 +8,5 @@ urlpatterns = [
     # for class based api
     path('students-list/', views.studentAPI.as_view()),
     path('students/', views.allStudentAPI.as_view()),
+    path('all/', views.studentList.as_view()),
 ]
