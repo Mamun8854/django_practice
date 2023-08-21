@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block start %}
+    <h1 class="text-primary text-center mt-4">Tiger Park Limited</h1>
+    <div class="container">
+        <button>
+            <a class="text-decoration-none text-black" href="/">Home</a>
+        </button>
+    </div>
+    <hr class="text-warning">
+
+
+   <div class="container">
+    <form class=" col-6 card p-3 shadow-lg mx-auto" method="POST">
+        {% csrf_token %}
+
+        <h4>Register</h4>
+        <hr>
+
+        <div class="form-group mb-3">
+          <label for="exampleInputEmail1">First Name</label>
+          <input name="first_name" type="text" class="form-control" placeholder="Enter First Name">
+        </div>
+        <div class="form-group mb-3">
+          <label>Lat Name</label>
+          <input name="last_name" type="text" class="form-control" placeholder="Enter Last Name">
+        </div>
+        <div class="form-group mb-3">
+          <label>User Name</label>
+          <input name="username" type="text" class="form-control" placeholder="Enter User Name">
+        </div>
+        <div class="form-group mb-3">
+          <label>Password</label>
+          <input name="passwor" type="password" required class="form-control" placeholder="Enter Password">
+        </div>
+       <p>
+        Already have any account ? Please <a href="/login">Login</a>
+       </p>
+        <button type="submit" class="btn btn-success">Register</button>
+      </form>
+   </div>
+   
+   
+    
+{% endblock %}

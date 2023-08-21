@@ -79,6 +79,10 @@ def update_student(request,id):
     context = {'student':queryset}
     return render(request, 'home/update_student.html',context)
 
+def register_user(request):
+    return render(request,'user/register.html')   
+def login_user(request):
+    return render(request,'user/login.html')   
 
 #   For API create  using function based api 
 """
