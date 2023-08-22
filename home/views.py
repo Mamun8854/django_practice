@@ -11,7 +11,7 @@ from rest_framework.views import APIView
 from django.http import Http404
 from rest_framework.response import Response
 from django.contrib.auth.models import User
-
+from django.contrib.auth import authenticate, login
 
 def home(request):
     student_info = [
@@ -107,8 +107,47 @@ def register_user(request):
         return redirect('/register')
     return render(request,'user/register.html')
 
+# def login_user(request):
+#     if request.method == "POST":
+#         data = request.POST
+#         username = data.get('username')
+#         password = data.get('password')
+#         if not User.objects.filter(username=username).exists():
+#             messages.error(request, "Invalid username")
+#             return redirect('/login')
+#         user = authenticate(request,username = username , password = password)
+#         if user is None:
+#             messages.error(request, "Invalid password")
+#             return redirect('/login')
+#         else:
+#             login(request,user)
+#             return redirect('')
+
+#     return render(request,'user/login.html')   
+
 def login_user(request):
-    return render(request,'user/login.html')   
+    if request.method == "POST":
+        data = request.POST
+        username = data.get('username')
+        password = data.get('password')
+
+        try:
+            user = User.objects.get(username=username)  
+        except User.DoesNotExist:
+            messages.error(request, "Invalid username")
+            return redirect('/login')
+
+        user = authenticate(request, username=username, password=password)  
+
+        if user is not None:
+            messages.error(request, "Invalid password")
+            return redirect('/login')
+        else:
+            login(request, user)
+            messages.info(request, "login success")
+            return redirect("home")  
+
+    return render(request, 'user/login.html')
 
 #   For API create  using function based api 
 """
