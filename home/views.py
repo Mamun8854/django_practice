@@ -89,12 +89,17 @@ def register_user(request):
         username =data.get('username') 
         password =data.get('first_name') 
 
+        user = User.objects.filter(username=username)
+        if user.exists():
+            messages.info(request, "Username already taken. Please enter uniqe username!")
+            return redirect('/register')
 
         user = User.objects.create(
             first_name=first_name,
             last_name=last_name,
             username=username,
         )
+
 
         user.set_password(password)
         user.save()
