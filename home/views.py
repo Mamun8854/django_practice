@@ -10,6 +10,7 @@ from rest_framework import status, generics
 from rest_framework.views import APIView
 from django.http import Http404
 from rest_framework.response import Response
+from django.contrib.auth.models import User
 
 
 def home(request):
@@ -80,7 +81,27 @@ def update_student(request,id):
     return render(request, 'home/update_student.html',context)
 
 def register_user(request):
-    return render(request,'user/register.html')   
+
+    if request.method == "POST":
+        data = request.POST
+        first_name =data.get('first_name') 
+        last_name =data.get('last_name') 
+        username =data.get('username') 
+        password =data.get('first_name') 
+
+
+        user = User.objects.create(
+            first_name=first_name,
+            last_name=last_name,
+            username=username,
+        )
+
+        user.set_password(password)
+        user.save()
+        messages.info(request, "Account created successfully")
+        return redirect('/register')
+    return render(request,'user/register.html')
+
 def login_user(request):
     return render(request,'user/login.html')   
 
