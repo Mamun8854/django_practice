@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block start %}
     <h1 class="text-primary text-center mt-4">Tiger Park Limited</h1>
+    <h4>{{request.user.first_name}}</h4>
     <div class="container">
         <button>
             <a class="text-decoration-none text-black" href="/about">About</a>

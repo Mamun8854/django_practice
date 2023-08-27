@@ -24,7 +24,9 @@ class StudentSerializer(serializers.Serializer):
 """
 
 """ for class based api """
+
+
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
-        fields = ['name','email','address','mobile']
+        fields = ['name', 'email', 'address', 'mobile']
